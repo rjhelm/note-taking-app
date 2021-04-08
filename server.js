@@ -16,8 +16,13 @@ app.get('/notes', (req, res) => {
 });
 
 // get db.json file and return saved notes
-app.get()
-
-app.listen(PORT, function () {
-    console.log('App is listening on http://localhost: ' + PORT);
+app.get('/api/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/db/db.json'));
 });
+
+// route user to main page otherwise
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'));
+})
+
+app.listen(PORT, () => console.log('Server listening on port: ' + PORT));
