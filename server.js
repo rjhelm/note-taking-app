@@ -9,10 +9,10 @@ const PORT = process.env.PORT || 3000;
 // data parsing setup for Express
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(__dirname));
 
 // Routes for api and html
-require('./routes/apiRoutes')(app);
-require('./routes/htmlRoutes')(app);
+require('./routes/routes')(app);
+
 
 app.listen(PORT, () => console.log(`App listening on PORT: ${PORT}`));
