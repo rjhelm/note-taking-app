@@ -12,5 +12,20 @@ module.exports = app => {
         let data = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
 
         console.log('/nGET request returning notes data: ' + JSON.stringify(data));
+        response.json(data);
     });
+    // API Post request
+    app.post('/api/notes', (req, res) => {
+        const newNote = request.body;
+        console.log('POST request - New Note: ' + JSON.stringify(newNote));
+
+        //assign the new note a unigue id
+        newNote.id = uuidv4();
+
+        // Give ability to read data fron db.json
+        let data = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+        data.push(newNote);
+
+        fs.writeFileSync('./db/db.json', JSON.stringify(data));
+    })
 }
