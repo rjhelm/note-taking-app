@@ -1,43 +1,41 @@
+// App dependencies //
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const noteData = require('./db/db');
 
-// use Express.js
+// Sets up Express app for our backend //
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// data parsing setup for Express
+// Data parsing || API calls || Link to assets //
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-// Routes for api and html
-// require('./routes/routes')(app);
-
-// Load page and start with index.html
+// HTML routes for index.html and notes.html for initial loadup //
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
-// Open notes.html file 
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
-// API routes (GET, POST, and DELETE) //
+// GET, POST, and DELETE API Routes //
 
-// GET & Post in one function because they use the same route //
+// Route uses the same JSON file to GET and POST so they are included together //
+// GET notes stored in JSON file
 app.route('/api/notes')
-.get(function(req, res) {
+.get(function(req, res) { // GET function for our notes, this will update when a note is saved or deleted //
     res.json(noteData);
 })
-
+// POST function, gives us the ability to add our notes to the json file //
     .post(function(req, res) {
         let filePath = path.join(__dirname, 'db/db.json');
         let newNote = req.body;
 
-        // Set a test id value //
+        // Original note will be this test note with this id and allows new notes to have unique id //
         let testId = 0;
         for (let i = 0; i < noteData.length; i++) {
             let individualNote = noteData[i];
