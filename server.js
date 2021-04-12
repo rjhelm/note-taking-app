@@ -39,7 +39,7 @@ app.route('api/notes')
         let newNote = req.body;
 
         // Set a test id value //
-        let testId = 1;
+        let testId = 0;
         for (let i = 0; i < notesData.length; i++) {
             let idNote = notesData[i];
 
@@ -56,9 +56,9 @@ app.route('api/notes')
                 return console.log(err);
             }
             console.log('Note Saved!');
-        })
-    })
-// GET and POST in same function because they are using the same route to the data //
+        });
+        res.json(newNote);
+    });
 // app.route('/api/notes')
 //     .get(function(req, res) {
 //         res.json(notesData);
@@ -89,6 +89,9 @@ app.route('api/notes')
 //     });
 //         res.json(newNote);
 // });
+
+// Delete note by indentifying id of saved notes //
+
 
 // // DELETE users note based on id without causing issues with saved notes and the data inside db.json //
 // app.delete('/api/notes/:id', (req, res) => {
