@@ -58,36 +58,6 @@ app.route('api/notes')
         });
         res.json(newNote);
     });
-// app.route('/api/notes')
-//     .get(function(req, res) {
-//         res.json(notesData);
-//     })
-
-//     .post(function(req, res) {
-//         let filePath = path.join(__dirname, '/db/db.json');
-//         let newNote = req.body;
-
-//         let testId = 99;
-//     for (let i = 0; i < notesData.length; i++) {
-        
-//             let individualNote = notesData[i];
-
-//         if (individualNote.id > notesData[i]) {
-//             testId = individualNote.id;
-//         }
-//     }
-
-//         newNote.id = testId + 1;
-//         notesData.push(newNote)
-
-//     fs.writeFile(filePath, JSON.stringify(notesData), (err) => {
-//         if (err) {
-//             return console.log(err);
-//         }
-//         console.log('Note saved!');
-//     });
-//         res.json(newNote);
-// });
 
 // Delete note by indentifying id of saved notes//remove from db.json //
 app.delete('/api/notes/:id', (req, res) => {
