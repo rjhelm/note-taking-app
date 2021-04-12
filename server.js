@@ -37,6 +37,16 @@ app.route('api/notes')
     .post(function(req, res) {
         let filePath = path.join(__dirname, 'db/db.json');
         let newNote = req.body;
+
+        // Set a test id value //
+        let testId = 1;
+        for (let i = 0; i < notesData.length; i++) {
+            let idNote = notesData[i];
+
+            if(idNote > notesData[i]) {
+                testId = idNote.id;
+            }
+        }
     })
 // GET and POST in same function because they are using the same route to the data //
 // app.route('/api/notes')
