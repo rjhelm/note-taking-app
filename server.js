@@ -90,20 +90,29 @@ app.route('api/notes')
 //         res.json(newNote);
 // });
 
-// Delete note by indentifying id of saved notes //
+// Delete note by indentifying id of saved notes//remove from db.json //
 app.delete('/api/notes/:id', (req, res) => {
-
+// file location to delete note from users saved notes //
     let filePath = (__dirname, './db/db.json');
 
     for (let i = o; i < notesData.length; i++) {
+
         if(notesData[i].id == req.params.id) {
             notesData.splice(i, 1);
             break;
         }
     }
-})
+    fs.writeFileSync(filePath, JSON.stringify(notesData), (err) => {
 
-// // DELETE users note based on id without causing issues with saved notes and the data inside db.json //
+        // if statement to confirm note was deleted or prompt that an error occured //
+        if (err) {
+            return console.log(err);
+        } else {
+            console.log('/nNote was deleted!');
+        }
+    });
+    res.json(notesData);
+})
 // app.delete('/api/notes/:id', (req, res) => {
 //     let filePath = path.join(__dirname, './db/db.json');
 
