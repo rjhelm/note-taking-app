@@ -1,9 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const database = require('./db/db');
-const route = require('./routes/apiRoutes');
-// const database = require('./db/db');
+const notesData = require('./db/db');
 
 // use Express.js
 const app = express();
@@ -14,7 +12,7 @@ const router = express.Router();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
-app.use('/routes/apiRoutes', route);
+
 // Routes for api and html
 // require('./routes/routes')(app);
 
@@ -30,10 +28,20 @@ router.get('/notes', (req, res) => {
 
 // API routes (GET, POST, and DELETE) //
 
+// GET & Post in one function because they use the same route //
+app.route('api/notes')
+.get(function(req, res) {
+    res.json(notesData);
+})
+
+    .post(function(req, res) {
+        let filePath = path.join(__dirname, 'db/db.json');
+        let newNote = req.body;
+    })
 // GET and POST in same function because they are using the same route to the data //
 // app.route('/api/notes')
 //     .get(function(req, res) {
-//         res.json(database);
+//         res.json(notesData);
 //     })
 
 //     .post(function(req, res) {
@@ -41,19 +49,19 @@ router.get('/notes', (req, res) => {
 //         let newNote = req.body;
 
 //         let testId = 99;
-//     for (let i = 0; i < database.length; i++) {
+//     for (let i = 0; i < notesData.length; i++) {
         
-//             let individualNote = database[i];
+//             let individualNote = notesData[i];
 
-//         if (individualNote.id > database[i]) {
+//         if (individualNote.id > notesData[i]) {
 //             testId = individualNote.id;
 //         }
 //     }
 
 //         newNote.id = testId + 1;
-//         database.push(newNote)
+//         notesData.push(newNote)
 
-//     fs.writeFile(filePath, JSON.stringify(database), (err) => {
+//     fs.writeFile(filePath, JSON.stringify(notesData), (err) => {
 //         if (err) {
 //             return console.log(err);
 //         }
@@ -66,20 +74,20 @@ router.get('/notes', (req, res) => {
 // app.delete('/api/notes/:id', (req, res) => {
 //     let filePath = path.join(__dirname, './db/db.json');
 
-//     for (let i = 0; i < database.length; i++) {
-//         if (database[i].id == req.params.id) {
-//             database.splice(i, 1);
+//     for (let i = 0; i < notesData.length; i++) {
+//         if (notesData[i].id == req.params.id) {
+//             notesData.splice(i, 1);
 //             break;
 //         }
 //     }
-//     fs.writeFileSync(filePath, JSON.stringify(database), (err) => {
+//     fs.writeFileSync(filePath, JSON.stringify(notesData), (err) => {
 //         if (err) {
 //             return console.log(err);
 //         } else {
 //             console.log('/nNote deleted');
 //         }
 //     });
-//     res.json(database);
+//     res.json(notesData);
 // });
 
 app.listen(PORT, () => console.log(`App listening on PORT: ${PORT}`));
