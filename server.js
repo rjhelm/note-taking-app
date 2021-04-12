@@ -6,7 +6,6 @@ const notesData = require('./db/db');
 // use Express.js
 const app = express();
 const PORT = process.env.PORT || 3000;
-const router = express.Router();
 
 // data parsing setup for Express
 app.use(express.urlencoded({ extended: true }));
