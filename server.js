@@ -47,6 +47,16 @@ app.route('api/notes')
                 testId = idNote.id;
             }
         }
+
+        newNote.id = testId + 1;
+        notesData.push(newNote)
+
+        fs.writeFile(filePath, JSON.stringify(notesData), (err) => {
+            if (err) {
+                return console.log(err);
+            }
+            console.log('Note Saved!');
+        })
     })
 // GET and POST in same function because they are using the same route to the data //
 // app.route('/api/notes')
