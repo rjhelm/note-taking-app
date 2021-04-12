@@ -91,7 +91,17 @@ app.route('api/notes')
 // });
 
 // Delete note by indentifying id of saved notes //
+app.delete('/api/notes/:id', (req, res) => {
 
+    let filePath = (__dirname, './db/db.json');
+
+    for (let i = o; i < notesData.length; i++) {
+        if(notesData[i].id == req.params.id) {
+            notesData.splice(i, 1);
+            break;
+        }
+    }
+})
 
 // // DELETE users note based on id without causing issues with saved notes and the data inside db.json //
 // app.delete('/api/notes/:id', (req, res) => {
