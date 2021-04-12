@@ -16,12 +16,12 @@ app.use(express.static('public'));
 // require('./routes/routes')(app);
 
 // Load page and start with index.html
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 // Open notes.html file 
-router.get('/notes', (req, res) => {
+app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
@@ -82,23 +82,5 @@ app.delete('/api/notes/:id', (req, res) => {
     });
     res.json(notesData);
 })
-// app.delete('/api/notes/:id', (req, res) => {
-//     let filePath = path.join(__dirname, './db/db.json');
-
-//     for (let i = 0; i < notesData.length; i++) {
-//         if (notesData[i].id == req.params.id) {
-//             notesData.splice(i, 1);
-//             break;
-//         }
-//     }
-//     fs.writeFileSync(filePath, JSON.stringify(notesData), (err) => {
-//         if (err) {
-//             return console.log(err);
-//         } else {
-//             console.log('/nNote deleted');
-//         }
-//     });
-//     res.json(notesData);
-// });
 
 app.listen(PORT, () => console.log(`App listening on PORT: ${PORT}`));
