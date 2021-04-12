@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const notesData = require('./db/db');
+const noteData = require('./db/db');
 
 // use Express.js
 const app = express();
@@ -28,9 +28,9 @@ app.get('/notes', (req, res) => {
 // API routes (GET, POST, and DELETE) //
 
 // GET & Post in one function because they use the same route //
-app.route('api/notes')
+app.route('/api/notes')
 .get(function(req, res) {
-    res.json(notesData);
+    res.json(noteData);
 })
 
     .post(function(req, res) {
@@ -39,18 +39,18 @@ app.route('api/notes')
 
         // Set a test id value //
         let testId = 0;
-        for (let i = 0; i < notesData.length; i++) {
-            let idNote = notesData[i];
+        for (let i = 0; i < noteData.length; i++) {
+            let individualNote = noteData[i];
 
-            if(idNote > notesData[i]) {
-                testId = idNote.id;
+            if(individualNote > noteData[i]) {
+                testId = individualNote.id;
             }
         }
 
         newNote.id = testId + 1;
-        notesData.push(newNote)
+        noteData.push(newNote)
 
-        fs.writeFile(filePath, JSON.stringify(notesData), (err) => {
+        fs.writeFile(filePath, JSON.stringify(noteData), (err) => {
             if (err) {
                 return console.log(err);
             }
@@ -64,14 +64,14 @@ app.delete('/api/notes/:id', (req, res) => {
 // file location to delete note from users saved notes //
     let filePath = (__dirname, './db/db.json');
 
-    for (let i = o; i < notesData.length; i++) {
+    for (let i = o; i < noteData.length; i++) {
 
-        if(notesData[i].id == req.params.id) {
-            notesData.splice(i, 1);
+        if(noteData[i].id == req.params.id) {
+            noteData.splice(i, 1);
             break;
         }
     }
-    fs.writeFileSync(filePath, JSON.stringify(notesData), (err) => {
+    fs.writeFileSync(filePath, JSON.stringify(noteData), (err) => {
 
         // if statement to confirm note was deleted or prompt that an error occured //
         if (err) {
@@ -80,7 +80,7 @@ app.delete('/api/notes/:id', (req, res) => {
             console.log('/nNote was deleted!');
         }
     });
-    res.json(notesData);
+    res.json(noteData);
 })
 
 app.listen(PORT, () => console.log(`App listening on PORT: ${PORT}`));
