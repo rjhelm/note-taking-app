@@ -36,12 +36,13 @@ app.route('/api/notes')
         let newNote = req.body;
 
         // Original note will be this test note with this id and allows new notes to have unique id //
-        let testId = 0;
+        let testId = 99;
         for (let i = 0; i < noteData.length; i++) {
-            let individualNote = noteData[i];
+            
+            let idNote = noteData[i];
 
-            if(individualNote > noteData[i]) {
-                testId = individualNote.id;
+            if (idNote > noteData[i]) {
+                testId = idNote.id;
             }
         }
 
@@ -62,7 +63,7 @@ app.delete('/api/notes/:id', (req, res) => {
 // file location to delete note from users saved notes //
     let filePath = (__dirname, './db/db.json');
 
-    for (let i = o; i < noteData.length; i++) {
+    for (let i = 0; i < noteData.length; i++) {
 
         if(noteData[i].id == req.params.id) {
             noteData.splice(i, 1);
